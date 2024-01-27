@@ -5,21 +5,21 @@ import cv2
 from cvzone.PoseModule import PoseDetector
 
 # Initialize video capture and pose detector
-#! Switch to webcam 
 cap = cv2.VideoCapture(0)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)  # Set the width
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)  # Set the height
 detector = PoseDetector()
 
-# Define the path to the folder containing shirt images
+# Get the list of shirt images in the folder
 shirtFolderPath = "Resources/Shirts"
-# Get a list of all shirt images in the folder
 listShirts = os.listdir(shirtFolderPath)
 
-# Define some constants and variables related to the size and aspect ratio of the shirt images
+# Define some constants and variables related to the size and aspect ratio of the shirt imagesx
 fixedRatio = 262 / 190  # widthOfShirt/widthOfPoint11to12
 shirtRatioHeightWidth = 581 / 440
 imageNumber = 0
 
-# Load images    for left and right buttons
+# Load images for left and right buttons
 imgButtonRight = cv2.imread("Resources/button.png", cv2.IMREAD_UNCHANGED)
 imgButtonLeft = cv2.flip(imgButtonRight, 1)
 
@@ -28,7 +28,7 @@ counterRight = 0
 counterLeft = 0
 
 # Define the speed of selection (how fast the progress indicator grows)
-selectionSpeed = 10
+selectionSpeed = 5
 
 # Main loop
 while True:
@@ -36,8 +36,10 @@ while True:
     success, img = cap.read()
     # Detect poses in the frame
     img = detector.findPose(img)
+    
     # Find the positions of landmarks in the frame
-    lmList, bboxInfo = detector.findPosition(img, bboxWithHands=False, draw=False)
+    lmList, bboxInfo = detector.findPosition(img, bboxWithHands=True, draw=True)
+    
     if lmList:
         # Get the positions of landmarks 11 and 12
         lm11 = lmList[11][1:3]
