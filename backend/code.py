@@ -39,19 +39,20 @@ while True:
     
     # Find the positions of landmarks in the frame
     lmList, bboxInfo = detector.findPosition(img, bboxWithHands=True, draw=True)
-    
     if lmList:
         # Get the positions of landmarks 11 and 12
         lm11 = lmList[11][1:3]
         lm12 = lmList[12][1:3]
         # Load the current shirt image
-        imgShirt = cv2.imread(os.path.join(shirtFolderPath, listShirts[imageNumber]), cv2.IMREAD_UNCHANGED)
+        imgShirt = cv2.imread(os.path.join(
+            shirtFolderPath, listShirts[imageNumber]), cv2.IMREAD_UNCHANGED)
 
         # Calculate the width of the shirt image based on the distance between landmarks 11 and 12
         widthOfShirt = int((lm11[0] - lm12[0]) * fixedRatio)
         # Resize the shirt image
         if widthOfShirt > 0 and shirtRatioHeightWidth > 0:
-            imgShirt = cv2.resize(imgShirt, (widthOfShirt, int(widthOfShirt * shirtRatioHeightWidth)))
+            imgShirt = cv2.resize(imgShirt, (widthOfShirt, int(
+                widthOfShirt * shirtRatioHeightWidth)))
         else:
             print("Invalid scaling factor. Cannot resize image.")
 
@@ -61,7 +62,8 @@ while True:
 
         # Try to overlay the shirt image onto the frame
         try:
-            img = cvzone.overlayPNG(img, imgShirt, (lm12[0] - offset[0], lm12[1] - offset[1]))
+            img = cvzone.overlayPNG(
+                img, imgShirt, (lm12[0] - offset[0], lm12[1] - offset[1]))
         except:
             pass
 
@@ -95,6 +97,29 @@ while True:
             # If the user is not pointing to any button, reset the counters
             counterRight = 0
             counterLeft = 0
+
+# Initialize variables for gesture recognition
+prev_x = None
+
+# Inside your main loop
+if lmList:
+    # Get x-coordinate of the wrist (or any other landmark)
+    wrist_x = lmList[0][1]  # adjust the index based on the landmark you choose
+
+    # Check if the previous x-coordinate is not None
+    if prev_x is not None:
+        # Check if there's significant horizontal movement
+        if abs(wrist_x - prev_x) > gesture_threshold:
+            # Determine the direction
+            if wrist_x > prev_x:
+                # Swipe Right
+                print("Swipe Right")
+            else:
+                # Swipe Left
+                print("Swipe Left")
+
+    # Update the previous x-coordinate
+    prev_x = wrist_x
 
     # Display the processed frame
     cv2.imshow("Image", img)
