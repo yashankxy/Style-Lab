@@ -98,7 +98,30 @@ while True:
             counterRight = 0
             counterLeft = 0
 
+# Initialize variables for gesture recognition
+prev_x = None
+
+# Inside your main loop
+if lmList:
+    # Get x-coordinate of the wrist (or any other landmark)
+    wrist_x = lmList[0][1]  # adjust the index based on the landmark you choose
+
+    # Check if the previous x-coordinate is not None
+    if prev_x is not None:
+        # Check if there's significant horizontal movement
+        if abs(wrist_x - prev_x) > gesture_threshold:
+            # Determine the direction
+            if wrist_x > prev_x:
+                # Swipe Right
+                print("Swipe Right")
+            else:
+                # Swipe Left
+                print("Swipe Left")
+
+    # Update the previous x-coordinate
+    prev_x = wrist_x
+
     # Display the processed frame
     cv2.imshow("Image", img)
     # Wait for a short delay before processing the next frame
-    cv2.waitKey(0)
+    cv2.waitKey(1)
