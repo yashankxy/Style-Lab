@@ -4,9 +4,10 @@ import cv2
 from cvzone.PoseModule import PoseDetector
 
 # Setup video capture and pose detection
+# videoCap = cv2.VideoCapture('Resources/Videos/1.mp4')
 videoCap = cv2.VideoCapture(0)
-videoCap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
-videoCap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+videoCap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+videoCap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
 poseDetect = PoseDetector()
 
 # Get list of images in the directory
@@ -45,13 +46,20 @@ while True:
         # Load the current shirt image
         shirtImg = cv2.imread(os.path.join(shirtDir, shirtList[imgIndex]), cv2.IMREAD_UNCHANGED)
 
+
+
+
         # Calculate the shirt image width based on the distance between landmarks 11 and 12
         shirtWidth = int((landmark11[0] - landmark12[0]) * ratio)
+        
+        
         # Resize the shirt image
-        if shirtWidth > 0 and shirtRatio > 0:
-            shirtImg = cv2.resize(shirtImg, (shirtWidth, int(shirtWidth * shirtRatio)))
-        else:
-            print("Invalid scaling factor. Cannot resize image.")
+        if shirtWidth < 0 and shirtRatio < 0:
+            shirtWidth = 0
+            shirtRatio = 0
+        shirtImg = cv2.resize(shirtImg, (shirtWidth, int(shirtWidth * shirtRatio)))
+        print("Width of shirt", shirtWidth)
+
 
         # Calculate the current scale and offset
         scale = (landmark11[0] - landmark12[0]) / 190
