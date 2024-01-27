@@ -48,10 +48,10 @@ while True:
         # Calculate the width of the shirt image based on the distance between landmarks 11 and 12
         widthOfShirt = int((lm11[0] - lm12[0]) * fixedRatio)
         # Resize the shirt image
-        # if widthOfShirt > 0 and shirtRatioHeightWidth > 0:
-        imgShirt = cv2.resize(imgShirt, (widthOfShirt, int(widthOfShirt * shirtRatioHeightWidth)))
-        # else:
-            # print("Invalid scaling factor. Cannot resize image.")
+        if widthOfShirt > 0 and shirtRatioHeightWidth > 0:
+            imgShirt = cv2.resize(imgShirt, (widthOfShirt, int(widthOfShirt * shirtRatioHeightWidth)))
+        else:
+            print("Invalid scaling factor. Cannot resize image.")
 
         # Calculate the current scale and offset
         currentScale = (lm11[0] - lm12[0]) / 190
