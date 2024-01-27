@@ -5,7 +5,7 @@ import cv2
 from cvzone.PoseModule import PoseDetector
 
 # Initialize video capture and pose detector
-#! Switch to webcam 
+#! Switch to webcam
 cap = cv2.VideoCapture(0)
 detector = PoseDetector()
 
@@ -37,19 +37,22 @@ while True:
     # Detect poses in the frame
     img = detector.findPose(img)
     # Find the positions of landmarks in the frame
-    lmList, bboxInfo = detector.findPosition(img, bboxWithHands=False, draw=False)
+    lmList, bboxInfo = detector.findPosition(
+        img, bboxWithHands=False, draw=False)
     if lmList:
         # Get the positions of landmarks 11 and 12
         lm11 = lmList[11][1:3]
         lm12 = lmList[12][1:3]
         # Load the current shirt image
-        imgShirt = cv2.imread(os.path.join(shirtFolderPath, listShirts[imageNumber]), cv2.IMREAD_UNCHANGED)
+        imgShirt = cv2.imread(os.path.join(
+            shirtFolderPath, listShirts[imageNumber]), cv2.IMREAD_UNCHANGED)
 
         # Calculate the width of the shirt image based on the distance between landmarks 11 and 12
         widthOfShirt = int((lm11[0] - lm12[0]) * fixedRatio)
         # Resize the shirt image
         if widthOfShirt > 0 and shirtRatioHeightWidth > 0:
-            imgShirt = cv2.resize(imgShirt, (widthOfShirt, int(widthOfShirt * shirtRatioHeightWidth)))
+            imgShirt = cv2.resize(imgShirt, (widthOfShirt, int(
+                widthOfShirt * shirtRatioHeightWidth)))
         else:
             print("Invalid scaling factor. Cannot resize image.")
 
@@ -59,7 +62,8 @@ while True:
 
         # Try to overlay the shirt image onto the frame
         try:
-            img = cvzone.overlayPNG(img, imgShirt, (lm12[0] - offset[0], lm12[1] - offset[1]))
+            img = cvzone.overlayPNG(
+                img, imgShirt, (lm12[0] - offset[0], lm12[1] - offset[1]))
         except:
             pass
 
@@ -97,4 +101,4 @@ while True:
     # Display the processed frame
     cv2.imshow("Image", img)
     # Wait for a short delay before processing the next frame
-    cv2.waitKey(1)
+    cv2.waitKey(0)
