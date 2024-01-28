@@ -1,21 +1,15 @@
-## Inspiration
-Thinking of nostalgia draws a sense of self-discovery, a time when trying new things and the thrill of what comes next defined an era. The embodiment of this feeling is nowhere more vivid than in the world of fashion. Our aim was to capture the blast to the past, the joy of experimenting with different outfits, and the journey to find one's unique identity. Cher from "Clueless" served as a major muse, inspiring us to create a project similar to the movie's outfit generator but enhanced with today's cutting-edge computer vision technology.
+## About StyleLab
+Introducing "StyleLab," an innovative app revolutionizing the way you discover and refine your personal fashion sense. Using cutting-edge computer vision technology, StyleLab enables you to virtually try on a vast array of clothing items, all from the comfort of your device.
 
-## What it does
-The _StyleLab_ app is an innovative platform that allows users to virtually try on various clothing items using computer vision. Users use a live camera feed to see how clothes look on them in real-time, making it easier to visualize fit and style without physically trying them on. With _StyleLab_ the only thing needed needed to change your outfit is the raise of a hand.
+With a user-friendly interface, simply activate your camera to generate a lifelike digital representation of yourself. StyleLab employs intricate algorithms to identify key body landmarks, ensuring a precise and realistic fit for every garment. 
 
-## How we built it
-For StyleLab's essential computer vision functionalities, our team employed Python for the backend.  Using the capabilities of cv2 and cvzone libraries, we implemented VideoCapture() and PoseDetector() to effectively capture various landmarks on the human body, presenting them as red dots. These landmarks played an important role in dynamically scaling the T-shirt, adjusting its size based on the distance between the shoulders. Using the features provided by cvzone, we overlaid the T-shirt onto the figure within the video capture, ensuring a realistic and visually appealing representation. The finishing touch involved incorporating interactivity through arm signals, allowing users to engage with the virtual clothing experience in a dynamic and responsive manner.
+Navigate through an immersive virtual wardrobe, mix and match outfits, and witness the transformation in real-time. The app's intuitive design and responsive features make the exploration seamless, providing you with a dynamic and interactive fashion journey.
 
-## Challenges we ran into
-One of the first challenges we ran into was the difficulty of rescaling the shirt. Even though it was based on the landmarks the T-shirt continued to float in the air no where near a torso. However, we then realized the issue was not rescaling the T-shirt but rather aligning the corner of the T-shirt image with the shoulders. Once we figured out the offset to align the image with the landmarks the rescaling feature worked as intended. The next biggest problem we faced was the constant crashes during video capturing. After some debugging we realized it was due to the width between the shoulders becoming negative as the person turned. We resolved the issue by defaulting the width value to 1 before it becomes negative. While the errors and crashes could be frustrating they brought us closer together as a team and helped us understand our project better. 
+StyleLab isn't just about trying on clothes; it's about discovering and embracing your signature style with the help of cutting-edge technology. Elevate your fashion experience, redefine your wardrobe, and confidently embrace a style that's uniquely yours with StyleLab.
 
-## Accomplishments that we're proud of
-Over these 36 hours we faced many setbacks and delays to our projects as original ideas didn't pan out,  our new group work flow wasn't established and we each had different ideas. It is because of these struggles that we have even more to be proud of, because we persevered. Firstly, we are proud we weren't too proud to ask for help from mentors. They gave us great insights that we wouldn't have been see ourselves. Secondly, we are proud of our ability to pivot. When certain libraries or frameworks didn't work out or things we had in mind didn't go as plan, we adapted and approached our problem from a different angle. If at first we didn't succeed we tried a different method. Finally, we are the most proud of overcoming the challenges and making it to demoing our project. There's nothing more rewarding that knowing you did your best and made it out the other side.
+## Installation guide
 
-## What we learned
-In the technical aspect, our team members all approached new tasks with an open mind. We developed a deeper understanding of OpenCV, how tracking works, as well as how to deal with the crashes associated with VideoCapture. These 36 hours included numerous Youtube videos, google searches, mentor advice, and more, as we constantly pushed ourselves outside of our comfort zone. Amidst the chaos, we also picked up the art of efficient learning. When trying to consume copious amounts of knowledge in a short span of time, you quickly learn how to learn quickly. 
-
-## What's next for StyleLab
-The best thing about StyleLab is there is plenty of room to grow. The next stages for development include expanding its capabilities and enhancing user engagement. Firstly, we plan for more diverse outfit options with a broader range of clothing styles and brands, catering to diverse fashion tastes and sizes. Next, we want to improve the realism with which clothes fit on the user. Thirdly, we want to incorporate more AI to analyze fashion trends and provide feedback for outfits the user might like.
-This might take the form of a chatbot that will assist users in navigating the app, offer fashion advice, answer FAQs, and provide personalized outfit suggestions.
+The libraries that make StyleLab what it is are cv2, cvzone, and mediapipe which can all be installed using simple pip commands.
+`pip install cv2`
+`pip install cvzone`
+`pip install mediapipe`
