@@ -10,30 +10,26 @@ videoCap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
 videoCap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
 poseDetect = PoseDetector()
 
-# Get list of images in the directory
-shirtDir = "Resources/Shirts"
-shirtList = os.listdir(shirtDir)
 
 # Constants and variables for image size and aspect ratio
 ratio = 262 / 190
 shirtRatio = 581 / 440
 imgIndex = 0
-
-# Load button images
-rightButtonImg = cv2.imread("Resources/button.png", cv2.IMREAD_UNCHANGED)
-leftButtonImg = cv2.flip(rightButtonImg, 1)
-
-# Initialize button press counters
 rightCounter = 0
 leftCounter = 0
 
-# Selection speed
-speed = 10
+# Load images
+shirtDir = "Resources/Shirts"
+shirtList = os.listdir(shirtDir)
+rightButtonImg = cv2.imread("Resources/button.png", cv2.IMREAD_UNCHANGED)
+leftButtonImg = cv2.flip(rightButtonImg, 1)
 
-while True:
-    # Capture a frame from the video
+
+speed = 10
+flag = True    
+while flag  == True:
+    # Capture and detect pose in a frame from the video
     success, frame = videoCap.read()
-    # Detect poses in the frame
     frame = poseDetect.findPose(frame)
     
     # Find landmark positions in the frame
@@ -43,7 +39,18 @@ while True:
         # center = bbox["center"]
         frame, imgIndex, rightCounter, leftCounter = addShirt(frame, landmarks, imgIndex, rightCounter, leftCounter, shirtList, shirtDir, ratio, shirtRatio, speed, rightButtonImg, leftButtonImg)
         
+    
+    # Close on ESC
+    if cv2.waitKey(1) & 0xFF == 27:
+        flag = False
+    
+    #& Add a case to capture the frame when the user presses the spacebar
+    #~ if cv2.waitKey(1) & 0xFF == 32:
+    #~     cv2.imwrite("Resources/Images/1.png", frame)
+      
+    #! Take the photo can show the perfect Fit
+    
+        
     # Display the processed frame
     cv2.imshow("Frame", frame)
-    # Wait for a short delay before processing the next frame
     cv2.waitKey(1)
