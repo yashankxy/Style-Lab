@@ -1,0 +1,18 @@
+.button {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.button button {
+    padding: 10px 20px;
+    font-size: 16px; /* Adjust font size as needed */
+    background-color: #007bff; /* Adjust button background color as needed */
+    color: #fff; /* Adjust button text color as needed */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button button:hover {
+    background-color: #0056b3; /* Adjust button background color on hover as needed */
+}
