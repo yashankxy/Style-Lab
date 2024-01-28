@@ -1,104 +1,67 @@
-# Import necessary libraries
 import os
-import cvzone
 import cv2
 from cvzone.PoseModule import PoseDetector
+from addShirt import addShirt
 
-# Initialize video capture and pose detector
-#! Switch to webcam
-cap = cv2.VideoCapture(0)
-detector = PoseDetector()
+# Setup video capture and pose detection
+videoCap = cv2.VideoCapture(1)
+# videoCap = cv2.VideoCapture("Resources/Videos/1.mp4")
+videoCap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+videoCap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+poseDetect = PoseDetector()
 
-# Define the path to the folder containing shirt images
-shirtFolderPath = "Resources/Shirts"
-# Get a list of all shirt images in the folder
-listShirts = os.listdir(shirtFolderPath)
 
-# Define some constants and variables related to the size and aspect ratio of the shirt images
-fixedRatio = 262 / 190  # widthOfShirt/widthOfPoint11to12
-shirtRatioHeightWidth = 581 / 440
-imageNumber = 0
+# Constants and variables for image size and aspect ratio
+ratio = 262 / 190
+shirtRatio = 581 / 440
+imgIndex = 0
+rightCounter = 0
+leftCounter = 0
 
-# Load images    for left and right buttons
-imgButtonRight = cv2.imread("Resources/button.png", cv2.IMREAD_UNCHANGED)
-imgButtonLeft = cv2.flip(imgButtonRight, 1)
+# Load images
+shirtDir = "Resources/Shirts"
+shirtList = os.listdir(shirtDir)
+rightButtonImg = cv2.imread("Resources/button.png", cv2.IMREAD_UNCHANGED)
+leftButtonImg = cv2.flip(rightButtonImg, 1)
 
-# Initialize counters for left and right button presses
-counterRight = 0
-counterLeft = 0
 
-# Define the speed of selection (how fast the progress indicator grows)
-selectionSpeed = 10
-
-# Main loop
-while True:
-    # Read a frame from the video
-    success, img = cap.read()
-    # Detect poses in the frame
-    img = detector.findPose(img)
-    # Find the positions of landmarks in the frame
-    lmList, bboxInfo = detector.findPosition(
-        img, bboxWithHands=False, draw=False)
-    if lmList:
-        # Get the positions of landmarks 11 and 12
-        lm11 = lmList[11][1:3]
-        lm12 = lmList[12][1:3]
-        # Load the current shirt image
-        imgShirt = cv2.imread(os.path.join(
-            shirtFolderPath, listShirts[imageNumber]), cv2.IMREAD_UNCHANGED)
-
-        # Calculate the width of the shirt image based on the distance between landmarks 11 and 12
-        widthOfShirt = int((lm11[0] - lm12[0]) * fixedRatio)
-        # Resize the shirt image
-        # if widthOfShirt > 0 and shirtRatioHeightWidth > 0:
-        imgShirt = cv2.resize(imgShirt, (widthOfShirt, int(
-            widthOfShirt * shirtRatioHeightWidth)))
-        # else:
-        # print("Invalid scaling factor. Cannot resize image.")
-
-        # Calculate the current scale and offset
-        currentScale = (lm11[0] - lm12[0]) / 190
-        offset = int(44 * currentScale), int(48 * currentScale)
-
-        # Try to overlay the shirt image onto the frame
-        try:
-            img = cvzone.overlayPNG(
-                img, imgShirt, (lm12[0] - offset[0], lm12[1] - offset[1]))
-        except:
-            pass
-
-        # Overlay the left and right button images onto the frame
-        img = cvzone.overlayPNG(img, imgButtonRight, (1074, 293))
-        img = cvzone.overlayPNG(img, imgButtonLeft, (72, 293))
-
-        # Check if the user is pointing to the right button
-        if lmList[16][1] < 300:
-            # Increment the right counter and draw a progress indicator
-            counterRight += 1
-            cv2.ellipse(img, (139, 360), (66, 66), 0, 0,
-                        counterRight * selectionSpeed, (0, 255, 0), 20)
-            # If the progress indicator completes a full circle, change the current shirt image
-            if counterRight * selectionSpeed > 360:
-                counterRight = 0
-                if imageNumber < len(listShirts) - 1:
-                    imageNumber += 1
-        # Check if the user is pointing to the left button
-        elif lmList[15][1] > 900:
-            # Increment the left counter and draw a progress indicator
-            counterLeft += 1
-            cv2.ellipse(img, (1138, 360), (66, 66), 0, 0,
-                        counterLeft * selectionSpeed, (0, 255, 0), 20)
-            # If the progress indicator completes a full circle, change the current shirt image
-            if counterLeft * selectionSpeed > 360:
-                counterLeft = 0
-                if imageNumber > 0:
-                    imageNumber -= 1
-        else:
-            # If the user is not pointing to any button, reset the counters
-            counterRight = 0
-            counterLeft = 0
-
+speed = 10
+imgIndex = 0
+flag = True    
+while flag  == True:
+    # Capture and detect pose in a frame from the video
+    success, frame = videoCap.read()
+    frame = poseDetect.findPose(frame)
+    
+    # Find landmark positions in the frame
+    landmarks, bbox = poseDetect.findPosition(frame, bboxWithHands=False, draw=False)
+    
+    if landmarks:
+        # center = bbox["center"]
+        frame, imgIndex, rightCounter, leftCounter = addShirt(frame, landmarks, imgIndex, rightCounter, leftCounter, shirtList, shirtDir, ratio, shirtRatio, speed, rightButtonImg, leftButtonImg)
+         
+    # Close on ESC
+    if cv2.waitKey(1) & 0xFF == 27:
+        flag = False
+    
+    # Add a case to capture the frame when the user presses the spacebar
+    if cv2.waitKey(1) & 0xFF == 32:
+        imgIndex += 1
+        cv2.imwrite(f"Resources/Images/{imgIndex}.png", frame)
+        print("Image saved successfully!")
+      
+    #! Take the photo can show the perfect Fit
+    
+        
     # Display the processed frame
-    cv2.imshow("Image", img)
-    # Wait for a short delay before processing the next frame
+    cv2.imshow("Frame", frame)
     cv2.waitKey(1)
+
+
+# Delete all images in the Resources/Images directory
+for file in os.listdir("Resources/Images"):
+    os.remove(os.path.join("Resources/Images", file))
+
+# Release the video capture object and close all windows
+videoCap.release()
+cv2.destroyAllWindows()
