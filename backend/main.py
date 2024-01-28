@@ -1,6 +1,6 @@
 import os
 import cv2
-from cvzone.PoseModule import PoseDetector
+from PoseModule import PoseDetector
 from addShirt import addShirt
 
 # Setup video capture and pose detection
@@ -24,7 +24,7 @@ shirtList = os.listdir(shirtDir)
 rightButtonImg = cv2.imread("Resources/button.png", cv2.IMREAD_UNCHANGED)
 leftButtonImg = cv2.flip(rightButtonImg, 1)
 
-speed = 10
+speed = 5
 imgIndex = 0
 flag = True   
 
