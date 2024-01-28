@@ -9,7 +9,7 @@ StyleLab isn't just about trying on clothes; it's about discovering and embracin
 
 ## Installation guide
 
-The libraries that make StyleLab what it is are cv2, cvzone, and mediapipe which can all be installed using simple pip commands.
+The modules that make StyleLab what it is are cv2, cvzone, and mediapipe which can all be installed using simple pip commands.
 `pip install cv2`
 `pip install cvzone`
 `pip install mediapipe`
