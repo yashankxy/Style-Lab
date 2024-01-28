@@ -26,6 +26,7 @@ leftButtonImg = cv2.flip(rightButtonImg, 1)
 
 
 speed = 10
+imgIndex = 0
 flag = True    
 while flag  == True:
     # Capture and detect pose in a frame from the video
@@ -38,15 +39,16 @@ while flag  == True:
     if landmarks:
         # center = bbox["center"]
         frame, imgIndex, rightCounter, leftCounter = addShirt(frame, landmarks, imgIndex, rightCounter, leftCounter, shirtList, shirtDir, ratio, shirtRatio, speed, rightButtonImg, leftButtonImg)
-        
-    
+         
     # Close on ESC
     if cv2.waitKey(1) & 0xFF == 27:
         flag = False
     
-    #& Add a case to capture the frame when the user presses the spacebar
-    #~ if cv2.waitKey(1) & 0xFF == 32:
-    #~     cv2.imwrite("Resources/Images/1.png", frame)
+    # Add a case to capture the frame when the user presses the spacebar
+    if cv2.waitKey(1) & 0xFF == 32:
+        imgIndex += 1
+        cv2.imwrite(f"Resources/Images/{imgIndex}.png", frame)
+        print("Image saved successfully!")
       
     #! Take the photo can show the perfect Fit
     
@@ -54,3 +56,12 @@ while flag  == True:
     # Display the processed frame
     cv2.imshow("Frame", frame)
     cv2.waitKey(1)
+
+
+# Delete all images in the Resources/Images directory
+for file in os.listdir("Resources/Images"):
+    os.remove(os.path.join("Resources/Images", file))
+
+# Release the video capture object and close all windows
+videoCap.release()
+cv2.destroyAllWindows()
