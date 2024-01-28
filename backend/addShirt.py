@@ -9,7 +9,8 @@ def addShirt(frame, lm_List, imgIndex, rightCounter, leftCounter, list_Shirts, s
 
     width_of_Shirt = int((landmark11[0] - landmark12[0]) * fxd_Ratio)
     print(width_of_Shirt)
-
+    if width_of_Shirt <= 0:
+        width_of_Shirt = 1  # or some default value
     img_Shirt = cv2.resize(img_Shirt, (width_of_Shirt, int(width_of_Shirt * shirtRatio_H_W)))
 
     current_Scale = (landmark11[0] - landmark12[0]) / 190
