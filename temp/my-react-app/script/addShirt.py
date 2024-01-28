@@ -24,14 +24,16 @@ def addShirt(frame, lm_List, imgIndex, rightCounter, leftCounter, list_Shirts, s
     # img = cvzone.overlayPNG(img, imgButtonLeft, (72, 293))
     if lm_List[16][1] < 300:
         rightCounter += 1
-        cv2.ellipse(frame, (139, 360), (66, 66), 0, 0, rightCounter * selectionSpeed, (0, 255, 0), 20)
+        cv2.ellipse(frame, (139, 360), (66, 66), 0, 0,
+                    rightCounter * selectionSpeed, (0, 255, 0), 20)
         if rightCounter * selectionSpeed > 360:
             rightCounter = 0
             if imgIndex < len(list_Shirts) - 1:
                 imgIndex += 1
     elif lm_List[15][1] > 900:
         leftCounter += 1
-        cv2.ellipse(frame, (1138, 360), (66, 66), 0, 0, leftCounter * selectionSpeed, (0, 255, 0), 20)
+        cv2.ellipse(frame, (1138, 360), (66, 66), 0, 0,
+                    leftCounter * selectionSpeed, (0, 255, 0), 20)
         if leftCounter * selectionSpeed > 360:
             leftCounter = 0
             if imgIndex > 0:

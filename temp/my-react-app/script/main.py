@@ -53,6 +53,7 @@ while flag  == True:
         cv2.imwrite(f"Resources/Images/{imgIndex}.png", frame)
         print("Image saved successfully!")
       
+    #! Take the photo can show the perfect Fit
     
         
     # Display the processed frame

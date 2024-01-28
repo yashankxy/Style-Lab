@@ -159,3 +159,4 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 backend/Resources/Videos/1.mp4
+temp/my-react-app/script/Resources/Videos/1.mp4
