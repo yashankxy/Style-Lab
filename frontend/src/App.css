@@ -1,0 +1,9 @@
+* {
+  font-family: Poppins;
+}
+
+.App {
+  display: flex;
+  text-align: center;
+  overflow-y: hidden;
+}
