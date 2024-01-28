@@ -4,6 +4,7 @@ Introducing "StyleLab," an innovative app revolutionizing the way you discover a
 
 With a user-friendly interface, simply activate your camera to generate a lifelike digital representation of yourself. StyleLab employs intricate algorithms to identify key body landmarks, ensuring a precise and realistic fit for every garment.
 
+
 Navigate through an immersive virtual wardrobe, mix and match outfits, and witness the transformation in real-time. The app's intuitive design and responsive features make the exploration seamless, providing you with a dynamic and interactive fashion journey.
 
 StyleLab isn't just about trying on clothes; it's about discovering and embracing your signature style with the help of cutting-edge technology. Elevate your fashion experience, redefine your wardrobe, and confidently embrace a style that's uniquely yours with StyleLab.
@@ -26,4 +27,5 @@ Describe the installation process here. For example:
 
 ## Controls
     - Raise Left/Right Hand to switch between photos
+
 
