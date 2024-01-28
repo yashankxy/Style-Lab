@@ -19,13 +19,15 @@ Interaction: Allows users to 'press' virtual left and right buttons by moving th
 Feedback: Provides visual feedback, such as progress indicators, when interacting with buttons.
 Output: Displays the webcam feed with the virtual shirt and buttons, updating in real-time for an interactive try-on experience.
 ## Installation
-Describe the installation process here. For example:
-
 ```cd backend```
 ```pip install -r requirements.txt```
 ```python main.py```
 
+
 ## Controls
     - Raise Left/Right Hand to switch between photos
+
+
+Links: https://devpost.com/software/stylelab
 
 
