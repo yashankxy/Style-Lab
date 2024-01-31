@@ -24,7 +24,9 @@ shirtList = os.listdir(shirtDir)
 rightButtonImg = cv2.imread("Resources/button.png", cv2.IMREAD_UNCHANGED)
 leftButtonImg = cv2.flip(rightButtonImg, 1)
 
-  
+speed = 5
+imgIndex = 0
+flag = True 
 
 # cv2.namedWindow("Frame", cv2.WINDOW_NORMAL)
 # cv2.setWindowProperty("Frame", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
