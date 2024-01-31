@@ -15,7 +15,8 @@ poseDetect = PoseDetector()
 ratio = 262 / 190
 shirtRatio = 581 / 440
 imgIndex = 0
-
+rightCounter = 0
+leftCounter = 0
 
 # Load images
 shirtDir = "Resources/Shirts"
