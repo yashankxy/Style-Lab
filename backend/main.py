@@ -53,7 +53,10 @@ while flag  == True:
         cv2.imwrite(f"Resources/Images/{imgIndex}.png", frame)
         print("Image saved successfully!")
       
-    
+    # Display the processed frame
+    cv2.imshow("Frame", frame)
+    cv2.waitKey(1)
+
         
     
 
