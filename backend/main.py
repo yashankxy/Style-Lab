@@ -1,4 +1,4 @@
-
+import os
 import cv2
 from PoseModule import PoseDetector
 from addShirt import addShirt
