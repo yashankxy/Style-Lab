@@ -55,10 +55,7 @@ while flag  == True:
       
     
         
-    # Display the processed frame
-    cv2.imshow("Frame", frame)
-    cv2.waitKey(1)
-
+    
 
 # Delete all images in the Resources/Images directory
 for file in os.listdir("Resources/Images"):
